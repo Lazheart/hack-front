@@ -1,8 +1,8 @@
 @import "tailwindcss";
 :root {
-  /* Palette: blanco, celeste, azul, negro */
-  --bg-black: #0b0b0b; /* negro */
-  --text-white: #ffffff; /* blanco */
+  /* Palette: blanco y celeste por defecto (tema claro) */
+  --bg-black: #ffffff; /* color de fondo principal (se mantiene el nombre por compatibilidad) */
+  --text-white: #0b0b0b; /* color de texto principal (antes llamado text-white) */
   --celeste: #7dd3fc; /* celeste claro */
   --blue: #0ea5e9; /* azul */
 
@@ -10,7 +10,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
+  color-scheme: light;
   color: var(--text-white);
   background-color: var(--bg-black);
 
@@ -18,6 +18,15 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tema oscuro opcional */
+.dark {
+  --bg-black: #0b0b0b;
+  --text-white: #ffffff;
+  --celeste: #7dd3fc;
+  --blue: #0ea5e9;
+  color-scheme: dark;
 }
 
 a {
@@ -211,6 +220,38 @@ body {
 }
 .nav-button:hover{ background: rgba(255,255,255,0.02); }
 
+/* Nav specific CTA and ghost styles to match blanco + celeste palette */
+.nav-cta {
+  background: var(--celeste);
+  color: #ffffff;
+  border: 1px solid transparent;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+}
+.nav-cta:hover { filter: brightness(0.95); }
+.nav-ghost {
+  background: #ffffff;
+  color: var(--blue);
+  border: 1px solid rgba(14,165,233,0.15);
+  padding: 0.38rem 0.8rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+}
+.theme-toggle-btn {
+  background: transparent;
+  border: 1px solid rgba(14,165,233,0.08);
+  color: var(--blue);
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.search-input {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid rgba(11,11,11,0.08);
+}
+
 @media (max-width: 640px){
   .nav-links{ gap: 0.5rem; }
   .nav-inner{ padding: 0.6rem; }
@@ -252,3 +293,114 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Animation helpers: subtle grow and soft shadow for natural feeling */
+.anim-grow-on-hover {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  will-change: transform, box-shadow;
+  border-radius: 999px; /* pill-like */
+}
+.anim-grow-on-hover:hover {
+  transform: scale(1.06);
+  box-shadow: 0 10px 20px rgba(14,165,233,0.12);
+}
+
+/* Soft text growth (scale text only) to avoid square boxes */
+.text-grow-hover {
+  display: inline-block;
+  transition: transform 160ms ease, text-shadow 160ms ease;
+}
+.text-grow-hover:hover {
+  transform: scale(1.04);
+  text-shadow: 0 6px 18px rgba(2,6,23,0.08);
+}
+
+/* Keep link text white even on hover (useful for brand/dashboard links) */
+.keep-white { color: var(--text-white); text-decoration: none }
+.keep-white:hover { color: var(--text-white); }
+
+/* Navbar specific pill link */
+.nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: 0.36rem 0.85rem;
+  border-radius: 999px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  text-decoration: none;
+}
+.nav-pill:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(14,165,233,0.14);
+}
+
+/* Theme icon: visually only the icon, no square background */
+.theme-icon {
+  background: transparent;
+  border: none;
+  padding: 0.15rem;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--blue);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.theme-icon:hover { transform: scale(1.08); box-shadow: 0 8px 18px rgba(14,165,233,0.12); }
+/* avoid dark fill appearing when toggling theme; keep icon-only visual and sane focus */
+.theme-icon:focus { outline: none; }
+.theme-icon:focus-visible { box-shadow: 0 0 0 4px rgba(14,165,233,0.08); }
+
+/* Search: integrated icon inside input; collapses to icon only on small viewports */
+.search-wrapper { position: relative; width: 100%; }
+.search-wrapper .search-input {
+  width: 100%;
+  padding-left: 2.4rem;
+  transition: width 160ms ease, opacity 160ms ease;
+  border-radius: 999px;
+  border: 1px solid rgba(11,11,11,0.08);
+  background: rgba(255,255,255,0.95);
+}
+.search-wrapper .search-icon {
+  position: absolute;
+  left: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(27,78,120,0.9);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+@media (max-width: 640px) {
+  /* collapse search to icon-only on small screens */
+  .search-wrapper .search-input { width: 0; opacity: 0; padding-left: .6rem; }
+  .search-wrapper .search-icon { left: 0.5rem }
+  .search-wrapper { display: inline-flex; align-items: center; justify-content: center; max-width: 56px }
+}
+
+/* Footer collaborator text grow */
+.collab-link { display: inline-flex; gap: .5rem; align-items: center; text-decoration: none; }
+.collab-name { transition: transform 160ms ease, text-shadow 160ms ease; display: inline-block }
+.collab-link:hover .collab-name { transform: scale(1.05); text-shadow: 0 8px 24px rgba(14,165,233,0.10); }
+
+/* small auth button variant for navbar (uses same palette as .auth-button) */
+.btn-auth {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg,var(--blue),var(--celeste));
+  color: #ffffff; /* keep button text white */
+  font-weight: 700;
+  text-decoration: none;
+}
+.btn-auth {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.btn-auth:hover { transform: scale(1.06); box-shadow: 0 14px 34px rgba(14,165,233,0.16); color: #ffffff; }
+.btn-auth:focus { outline: none; box-shadow: 0 0 0 4px rgba(14,165,233,0.08); }
+

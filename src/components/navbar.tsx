@@ -1,6 +1,53 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../services/auth/useAuth'
+import { BsSun, BsMoon } from 'react-icons/bs'
+import { BiSearch } from 'react-icons/bi'
+
+// Theme toggle: toggles between light (default) and dark by adding a class to document.documentElement
+const ThemeToggle = () => {
+  const [theme, setTheme] = useState<string>(() => (typeof window !== 'undefined' ? (localStorage.getItem('theme') || 'light') : 'light'))
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  return (
+    <button
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      aria-label="Cambiar tema"
+      className="theme-icon"
+      title="Cambiar tema"
+    >
+      {theme === 'light' ? <BsSun size={18} /> : <BsMoon size={18} />}
+    </button>
+  )
+}
+
+// Search form: navigates to /dashboard?q=...&page=1
+const SearchForm = () => {
+  const navigate = useNavigate()
+  const [q, setQ] = useState('')
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const params = new URLSearchParams()
+    if (q.trim()) params.set('q', q.trim())
+    params.set('page', '1')
+    navigate(`/dashboard?${params.toString()}`)
+  }
+
+  return (
+    <form onSubmit={onSubmit} style={{display: 'flex', alignItems: 'center', gap: '.4rem'}} className="search-wrapper">
+      {/* single integrated search icon (acts as submit) */}
+      <button type="submit" aria-label="Buscar" title="Buscar" className="search-icon" style={{background: 'transparent', border: 'none'}}>
+        <BiSearch size={18} />
+      </button>
+      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar..." aria-label="Buscar incidencias" className="search-input" />
+    </form>
+  )
+}
 
 const Navbar = () => {
   const { user, logout } = useAuth()
@@ -72,22 +119,28 @@ const Navbar = () => {
     <>
       <header ref={headerRef} style={headerStyle} className="anim-header anim-fade-in">
         <nav style={{display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.75rem 1.5rem', maxWidth: '1200px', margin: '0 auto'}}>
-          <div style={{fontWeight: 700}}>
-            <Link to="/" className="anim-grow-on-hover" style={{color: 'var(--celeste)', textDecoration: 'none'}}>Hackaton</Link>
+          {/* Left: brand + Dashboard + theme icon (no square) */}
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700}}>
+            <a className="text-grow-hover keep-white" href="https://hackathon.cs2032.com/" target="_blank" rel="noreferrer" style={{textDecoration: 'none'}}>Hackaton</a>
+            <Link to="/dashboard" className="text-grow-hover keep-white" style={{textDecoration: 'none', fontWeight: 600}}>Dashboard</Link>
+            <ThemeToggle />
           </div>
 
-          <div style={{display: 'flex', gap: '1rem', alignItems: 'center', flex: 1}}>
-            <Link to="/" className="anim-navlink" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Home</Link>
-            <Link to="/post" className="anim-navlink" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Posts</Link>
+          {/* Center: search (centered) */}
+          <div style={{flex: 1, display: 'flex', justifyContent: 'center'}}>
+            <div style={{width: '100%', maxWidth: 640}}>
+              <SearchForm />
+            </div>
           </div>
 
+          {/* Right: auth actions */}
           <div style={{display: 'flex', gap: '0.75rem', alignItems: 'center'}}>
             {user ? (
-              <button onClick={handleLogout} className="anim-cta" style={{background: 'transparent', color: 'var(--text-white)', border: '1px solid rgba(255,255,255,0.06)', padding: '0.5rem 0.8rem', borderRadius: 6}}>Logout</button>
+              <button onClick={handleLogout} className="anim-cta" style={{background: 'transparent', color: 'var(--text-white)', border: '1px solid rgba(0,0,0,0.06)', padding: '0.5rem 0.8rem', borderRadius: 6}}>Logout</button>
             ) : (
               <>
-                <Link to="/login" className="nav-link" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Login</Link>
-                <Link to="/register" className="nav-button" style={{color: 'var(--celeste)', textDecoration: 'none', fontWeight: 700}}>Register</Link>
+                <Link to="/login" className="btn-auth" style={{textDecoration: 'none'}}>Login</Link>
+                <Link to="/register" className="btn-auth" style={{textDecoration: 'none'}}>Register</Link>
               </>
             )}
           </div>
