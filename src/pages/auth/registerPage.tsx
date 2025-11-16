@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import useAuth from '../../services/auth/useAuth'
+import RegisterBg from '../../assets/Campus-UTEC-web-4.png'
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('')
@@ -16,39 +17,42 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="auth-container">
+    <div className="auth-container" style={{backgroundImage: `url(${RegisterBg})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
       <div className="auth-box">
-        <h1 className="auth-title">Crear cuenta</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder="Nombre de usuario"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className="auth-input"
-          />
+        <div className="auth-card">
+          <h1 className="auth-title">Crear cuenta</h1>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <input
+              type="text"
+              placeholder="Nombre de usuario"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className="auth-input"
+            />
 
-          <input
-            type="email"
-            placeholder="email@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="auth-input"
-          />
+            <input
+              type="email"
+              placeholder="email@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="auth-input"
+            />
 
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="auth-input"
-          />
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="auth-input"
+            />
 
-          <button className="auth-button">Crear cuenta</button>
-        </form>
+            <button className="auth-button">Crear cuenta</button>
+            <p className="auth-small">¿Ya tienes cuenta? <Link to="/login" style={{color: 'var(--celeste)'}}>Inicia sesión</Link></p>
+          </form>
+        </div>
       </div>
     </div>
   )

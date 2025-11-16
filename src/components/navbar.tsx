@@ -1,4 +1,3 @@
-// navbar (simple) - no React named imports required with modern JSX transform
 import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../services/auth/useAuth'
 
@@ -12,22 +11,28 @@ const Navbar = () => {
   }
 
   return (
-    <header className="site-navbar">
-      <div className="nav-inner">
-        <div className="nav-brand">
-          <Link to="/" className="brand-link">Waveon</Link>
+    <header style={{background: 'var(--bg-black)', borderBottom: '1px solid rgba(255,255,255,0.06)'}}>
+      <nav style={{display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.75rem 1.5rem', maxWidth: '1200px', margin: '0 auto'}}>
+        <div style={{fontWeight: 700}}>
+          <Link to="/" style={{color: 'var(--celeste)', textDecoration: 'none'}}>Waveon</Link>
         </div>
 
-        <nav className="nav-links">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/post" className="nav-link">Posts</Link>
+        <div style={{display: 'flex', gap: '1rem', alignItems: 'center', flex: 1}}>
+          <Link to="/" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Home</Link>
+          <Link to="/post" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Posts</Link>
+        </div>
+
+        <div style={{display: 'flex', gap: '0.75rem', alignItems: 'center'}}>
           {user ? (
-            <button onClick={handleLogout} className="nav-button">Logout</button>
+            <button onClick={handleLogout} style={{background: 'transparent', color: 'var(--text-white)', border: '1px solid rgba(255,255,255,0.06)', padding: '0.5rem 0.8rem', borderRadius: 6}}>Logout</button>
           ) : (
-            <Link to="/login" className="nav-link">Login</Link>
+            <>
+              <Link to="/login" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Login</Link>
+              <Link to="/register" style={{color: 'var(--celeste)', textDecoration: 'none', fontWeight: 700}}>Register</Link>
+            </>
           )}
-        </nav>
-      </div>
+        </div>
+      </nav>
     </header>
   )
 }
