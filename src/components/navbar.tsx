@@ -127,6 +127,7 @@ const Navbar = () => {
           <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700}}>
             {/* Ocultar marca en pantallas muy pequeñas para que no se desborde */}
             <a className="text-grow-hover keep-white hide-xs" href="https://hackathon.cs2032.com/" target="_blank" rel="noreferrer" style={{textDecoration: 'none'}}>Hackaton</a>
+            <Link to="/" className="text-grow-hover keep-white" style={{textDecoration: 'none', fontWeight: 600}}> Home</Link>
             <Link to="/dashboard" className="text-grow-hover keep-white" style={{textDecoration: 'none', fontWeight: 600}}>Dashboard</Link>
             <ThemeToggle />
           </div>

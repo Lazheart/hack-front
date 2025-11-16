@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import LoginPage from './pages/auth/loginPage'
 import RegisterPage from './pages/auth/registerPage'
 import DashboardPage from './pages/dashboard/dashboardPage'
+import HomePage from './pages/home/homePage'
 import PostPage from './pages/post/postPage'
 import './App.css'
 
@@ -21,7 +22,7 @@ function App() {
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/post" element={<ProtectedRoute><PostPage /></ProtectedRoute>} />
 
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </main>

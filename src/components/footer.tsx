@@ -1,5 +1,5 @@
 import { BsGithub } from 'react-icons/bs'
-import LogoImage from '../assets/react.svg'
+import LogoImage from '../assets/hydra.png'
 
 const Footer = () => {
   const collaborators = [
