@@ -1,8 +1,7 @@
+@import "tailwindcss";
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
 }
 
 .logo {
@@ -39,4 +38,95 @@
 
 .read-the-docs {
   color: #888;
+}
+.innerWidth{
+  width: 100%;
+}
+
+.flexCenter {
+  display: flex;
+  row-gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.innerWidth{
+    width: 100%;
+  }
+
+  
+.paddings{
+  padding: 1rem;
+}
+
+.flexCenter {
+  display: flex;
+  row-gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flexColCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.flexColStart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.flexColEnd {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.flexStart {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.f-container{
+  justify-content: space-between;
+  border-top: .5px solid rgba(0,0,0,0.148)
+}
+.f-left{
+  gap: 1rem;
+}
+
+.f-description{
+  font-size: 0.9rem;
+  color: rgba(0,0,0,0.6);
+  line-height: 1.5;
+}
+
+.f-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+.f-menu{
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  font-weight: 500;
+}
+.f-menu a {
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+  display: inline-block;
+}
+.f-menu a:hover {
+  transform: scale(1.12);
 }
