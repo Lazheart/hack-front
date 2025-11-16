@@ -21,7 +21,7 @@ const LoginPage = () => {
   return (
     <div className="auth-container" style={{backgroundImage: `url(${LoginBg})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
       <div className="auth-box">
-        <div className="auth-card">
+        <div className="auth-card anim-card anim-fade-in">
           <h1 className="auth-title">Login</h1>
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <input
@@ -42,8 +42,8 @@ const LoginPage = () => {
               className="auth-input"
             />
 
-            <button className="auth-button">Entrar</button>
-            <p className="auth-small">Si no tienes cuenta, <Link to="/register" style={{color: 'var(--celeste)'}}>regístrate</Link></p>
+            <button className="auth-button anim-cta">Entrar</button>
+            <p className="auth">Si no tienes cuenta, <Link to="/register" className="navlink" style={{color: 'var(--celeste)'}}>regístrate</Link></p>
           </form>
         </div>
       </div>

@@ -19,7 +19,7 @@ const RegisterPage = () => {
   return (
     <div className="auth-container" style={{backgroundImage: `url(${RegisterBg})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
       <div className="auth-box">
-        <div className="auth-card">
+        <div className="auth-card anim-card anim-fade-in">
           <h1 className="auth-title">Crear cuenta</h1>
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <input
@@ -49,8 +49,8 @@ const RegisterPage = () => {
               className="auth-input"
             />
 
-            <button className="auth-button">Crear cuenta</button>
-            <p className="auth-small">¿Ya tienes cuenta? <Link to="/login" style={{color: 'var(--celeste)'}}>Inicia sesión</Link></p>
+            <button className="auth-button anim-cta">Crear cuenta</button>
+            <p className="auth-small">¿Ya tienes cuenta? <Link to="/login" className="navlink" style={{color: 'var(--celeste)'}}>Inicia sesión</Link></p>
           </form>
         </div>
       </div>

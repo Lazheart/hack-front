@@ -86,8 +86,8 @@ const Navbar = () => {
               <button onClick={handleLogout} className="anim-cta" style={{background: 'transparent', color: 'var(--text-white)', border: '1px solid rgba(255,255,255,0.06)', padding: '0.5rem 0.8rem', borderRadius: 6}}>Logout</button>
             ) : (
               <>
-                <Link to="/login" className="anim-navlink" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Login</Link>
-                <Link to="/register" className="anim-cta" style={{color: 'var(--celeste)', textDecoration: 'none', fontWeight: 700}}>Register</Link>
+                <Link to="/login" className="nav-link" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Login</Link>
+                <Link to="/register" className="nav-button" style={{color: 'var(--celeste)', textDecoration: 'none', fontWeight: 700}}>Register</Link>
               </>
             )}
           </div>
