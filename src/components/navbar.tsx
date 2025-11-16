@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAuth from '../services/auth/useAuth'
 import { BsSun, BsMoon } from 'react-icons/bs'
 import { BiSearch } from 'react-icons/bi'
@@ -52,6 +52,7 @@ const SearchForm = () => {
 const Navbar = () => {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const headerRef = useRef<HTMLElement | null>(null)
   const lastScrollY = useRef(0)
   const [visible, setVisible] = useState(true)
@@ -115,22 +116,28 @@ const Navbar = () => {
     zIndex: 999,
   }
 
+  const path = location.pathname
+  const isAuthPage = path === '/login' || path === '/register'
+
   return (
     <>
       <header ref={headerRef} style={headerStyle} className="anim-header anim-fade-in">
         <nav style={{display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.75rem 1.5rem', maxWidth: '1200px', margin: '0 auto'}}>
           {/* Left: brand + Dashboard + theme icon (no square) */}
           <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700}}>
-            <a className="text-grow-hover keep-white" href="https://hackathon.cs2032.com/" target="_blank" rel="noreferrer" style={{textDecoration: 'none'}}>Hackaton</a>
+            {/* Ocultar marca en pantallas muy pequeñas para que no se desborde */}
+            <a className="text-grow-hover keep-white hide-xs" href="https://hackathon.cs2032.com/" target="_blank" rel="noreferrer" style={{textDecoration: 'none'}}>Hackaton</a>
             <Link to="/dashboard" className="text-grow-hover keep-white" style={{textDecoration: 'none', fontWeight: 600}}>Dashboard</Link>
             <ThemeToggle />
           </div>
 
-          {/* Center: search (centered) */}
+          {/* Centro: mantiene espacio flex para que los botones sigan a la derecha */}
           <div style={{flex: 1, display: 'flex', justifyContent: 'center'}}>
-            <div style={{width: '100%', maxWidth: 640}}>
-              <SearchForm />
-            </div>
+            {!isAuthPage && (
+              <div style={{width: '100%', maxWidth: 640}}>
+                <SearchForm />
+              </div>
+            )}
           </div>
 
           {/* Right: auth actions */}
@@ -139,8 +146,12 @@ const Navbar = () => {
               <button onClick={handleLogout} className="anim-cta" style={{background: 'transparent', color: 'var(--text-white)', border: '1px solid rgba(0,0,0,0.06)', padding: '0.5rem 0.8rem', borderRadius: 6}}>Logout</button>
             ) : (
               <>
-                <Link to="/login" className="btn-auth" style={{textDecoration: 'none'}}>Login</Link>
-                <Link to="/register" className="btn-auth" style={{textDecoration: 'none'}}>Register</Link>
+                {path !== '/login' && (
+                  <Link to="/login" className="btn-auth" style={{textDecoration: 'none'}}>Login</Link>
+                )}
+                {path !== '/register' && (
+                  <Link to="/register" className="btn-auth" style={{textDecoration: 'none'}}>Register</Link>
+                )}
               </>
             )}
           </div>

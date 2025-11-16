@@ -124,6 +124,17 @@ body {
   .auth-button{ width: 100% }
 }
 
+/* Extra-small (phones ~390px width) fine-tuning */
+@media (max-width: 420px){
+  .auth-title{ font-size: 1.8rem; }
+  .auth-input{ padding: 0.85rem 1rem; font-size: .95rem; }
+  .auth-button{ padding: 0.85rem 0.95rem; font-size: .95rem; }
+  /* Compact navbar paddings and buttons, and allow selective hiding */
+  .btn-auth{ padding: 0.32rem 0.65rem; font-size: .9rem }
+  .nav-inner{ padding: 0.5rem 0.5rem !important; }
+  .hide-xs{ display: none !important; }
+}
+
 /* Footer responsive layout */
 .footer-inner{
   max-width: 1200px;
