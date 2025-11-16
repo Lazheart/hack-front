@@ -54,7 +54,7 @@ const NewCard = () => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+  <Card sx={{ maxWidth: 345 }} className="anim-card">
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

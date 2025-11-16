@@ -129,3 +129,78 @@
 .f-menu a:hover {
   transform: scale(1.12);
 }
+
+/* --- simple UI animation utility classes --- */
+:root{
+  --anim-duration: 220ms;
+  --anim-ease: cubic-bezier(0.2,0,0,1);
+}
+
+@keyframes hf-fade-in-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .anim-fade-in { animation: hf-fade-in-up 350ms var(--anim-ease) both; }
+}
+
+/* Hover/interaction growth and subtle shadow */
+.anim-grow-on-hover,
+.anim-navlink,
+.anim-cta,
+.anim-card,
+.anim-footer {
+  transition: transform var(--anim-duration) var(--anim-ease), box-shadow var(--anim-duration) var(--anim-ease), filter var(--anim-duration) var(--anim-ease);
+  will-change: transform, box-shadow, filter;
+}
+
+.anim-grow-on-hover:hover,
+.anim-navlink:hover,
+.anim-cta:hover,
+.anim-card:hover,
+.anim-footer:hover {
+  transform: scale(1.035);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.25);
+}
+
+.anim-navlink {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.anim-navlink:hover { transform: translateY(-3px) scale(1.03); }
+
+.anim-cta {
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+}
+
+.anim-header { backface-visibility: hidden; }
+
+.anim-card { border-radius: 8px; overflow: hidden; }
+
+.anim-footer img { transition: transform 300ms var(--anim-ease), filter 300ms var(--anim-ease); }
+.anim-footer img:hover { transform: scale(1.08) rotate(-3deg); filter: drop-shadow(0 8px 22px rgba(0,0,0,0.25)); }
+
+/* focus accessibility */
+.anim-navlink:focus-visible,
+.anim-cta:focus-visible,
+.anim-grow-on-hover:focus-visible {
+  outline: 3px solid rgba(100,110,255,0.15);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-in,
+  .anim-grow-on-hover,
+  .anim-navlink,
+  .anim-cta,
+  .anim-card,
+  .anim-footer {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}

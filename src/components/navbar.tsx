@@ -70,24 +70,24 @@ const Navbar = () => {
 
   return (
     <>
-      <header ref={headerRef} style={headerStyle}>
+      <header ref={headerRef} style={headerStyle} className="anim-header anim-fade-in">
         <nav style={{display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.75rem 1.5rem', maxWidth: '1200px', margin: '0 auto'}}>
           <div style={{fontWeight: 700}}>
-            <Link to="/" style={{color: 'var(--celeste)', textDecoration: 'none'}}>Waveon</Link>
+            <Link to="/" className="anim-grow-on-hover" style={{color: 'var(--celeste)', textDecoration: 'none'}}>Waveon</Link>
           </div>
 
           <div style={{display: 'flex', gap: '1rem', alignItems: 'center', flex: 1}}>
-            <Link to="/" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Home</Link>
-            <Link to="/post" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Posts</Link>
+            <Link to="/" className="anim-navlink" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Home</Link>
+            <Link to="/post" className="anim-navlink" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Posts</Link>
           </div>
 
           <div style={{display: 'flex', gap: '0.75rem', alignItems: 'center'}}>
             {user ? (
-              <button onClick={handleLogout} style={{background: 'transparent', color: 'var(--text-white)', border: '1px solid rgba(255,255,255,0.06)', padding: '0.5rem 0.8rem', borderRadius: 6}}>Logout</button>
+              <button onClick={handleLogout} className="anim-cta" style={{background: 'transparent', color: 'var(--text-white)', border: '1px solid rgba(255,255,255,0.06)', padding: '0.5rem 0.8rem', borderRadius: 6}}>Logout</button>
             ) : (
               <>
-                <Link to="/login" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Login</Link>
-                <Link to="/register" style={{color: 'var(--celeste)', textDecoration: 'none', fontWeight: 700}}>Register</Link>
+                <Link to="/login" className="anim-navlink" style={{color: 'var(--text-white)', textDecoration: 'none'}}>Login</Link>
+                <Link to="/register" className="anim-cta" style={{color: 'var(--celeste)', textDecoration: 'none', fontWeight: 700}}>Register</Link>
               </>
             )}
           </div>
