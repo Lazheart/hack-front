@@ -34,7 +34,7 @@ export async function registerApi(payload: RegisterRequest): Promise<RegisterRes
 		body: JSON.stringify(body),
 	})
 
-	if (res.status !== 201) {
+	if (!res.ok) {
 		const txt = await res.text()
 		throw new Error(txt || `Register failed with status ${res.status}`)
 	}
