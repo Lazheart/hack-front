@@ -1,11 +1,18 @@
+@import "tailwindcss";
 :root {
+  /* Palette: blanco, celeste, azul, negro */
+  --bg-black: #0b0b0b; /* negro */
+  --text-white: #ffffff; /* blanco */
+  --celeste: #7dd3fc; /* celeste claro */
+  --blue: #0ea5e9; /* azul */
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: dark;
+  color: var(--text-white);
+  background-color: var(--bg-black);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -24,10 +31,101 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg-black);
+  color: var(--text-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container used by auth pages to center the form */
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* keep form aligned to left like design, but vertically centered */
+  min-height: 100vh;
+  padding: 3rem 2rem;
+}
+
+.auth-box {
+  max-width: 520px;
+  width: 100%;
+  background: transparent;
+}
+
+.auth-title {
+  font-size: 3.2rem;
+  margin-bottom: 1rem;
+  color: var(--text-white);
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.02);
+  color: var(--text-white);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin-top: 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: linear-gradient(90deg,var(--blue),var(--celeste));
+  color: var(--bg-black);
+  font-weight: 600;
+}
+
+.auth-small { color: rgba(255,255,255,0.75); }
+
+/* Navbar styles */
+.site-navbar {
+  width: 100%;
+  background: linear-gradient(90deg,var(--bg-black), rgba(14,165,233,0.06));
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.nav-inner{
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+.nav-brand .brand-link{
+  color: var(--celeste);
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+.nav-links{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.nav-link{
+  color: var(--celeste);
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+}
+.nav-link:hover{ color: var(--blue); }
+.nav-button{
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--celeste);
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.nav-button:hover{ background: rgba(255,255,255,0.02); }
+
+@media (max-width: 640px){
+  .nav-links{ gap: 0.5rem; }
+  .nav-inner{ padding: 0.6rem; }
 }
 
 h1 {

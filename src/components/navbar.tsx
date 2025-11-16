@@ -1,68 +1,35 @@
-import { useState } from 'react'
-import {
-  CButton,
-  CCollapse,
-  CContainer,
-  CDropdown,
-  CDropdownDivider,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
-  CForm,
-  CFormInput,
-  CNavbar,
-  CNavbarBrand,
-  CNavbarNav,
-  CNavbarToggler,
-  CNavItem,
-  CNavLink,
-} from '@coreui/react'
+// navbar (simple) - no React named imports required with modern JSX transform
+import { Link, useNavigate } from 'react-router-dom'
+import useAuth from '../services/auth/useAuth'
 
+const Navbar = () => {
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
 
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
 
-export const Navbar = () => {
-    const [visible, setVisible] = useState(false)
   return (
-    <CNavbar expand="lg" className="bg-body-tertiary">
-      <CContainer fluid>
-        <CNavbarBrand href="#">Navbar</CNavbarBrand>
-        <CNavbarToggler onClick={() => setVisible(!visible)} />
-        <CCollapse className="navbar-collapse" visible={visible}>
-          <CNavbarNav className="me-auto">
-            <CNavItem>
-              <CNavLink href="#" active>
-                Home
-              </CNavLink>
-            </CNavItem>
-            <CNavItem>
-              <CNavLink href="#">Link</CNavLink>
-            </CNavItem>
-            <CDropdown variant="nav-item" popper={false}>
-              <CDropdownToggle color="secondary">Dropdown button</CDropdownToggle>
-              <CDropdownMenu>
-                <CDropdownItem href="#">Action</CDropdownItem>
-                <CDropdownItem href="#">Another action</CDropdownItem>
-                <CDropdownDivider />
-                <CDropdownItem href="#">Something else here</CDropdownItem>
-              </CDropdownMenu>
-            </CDropdown>
-            <CNavItem>
-              <CNavLink href="#" disabled>
-                Disabled
-              </CNavLink>
-            </CNavItem>
-          </CNavbarNav>
-          <CForm className="d-flex">
-            <CFormInput type="search" className="me-2" placeholder="Search" />
-            <CButton type="submit" color="success" variant="outline">
-              Search
-            </CButton>
-          </CForm>
-        </CCollapse>
-      </CContainer>
-    </CNavbar>
+    <header className="site-navbar">
+      <div className="nav-inner">
+        <div className="nav-brand">
+          <Link to="/" className="brand-link">Waveon</Link>
+        </div>
+
+        <nav className="nav-links">
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/post" className="nav-link">Posts</Link>
+          {user ? (
+            <button onClick={handleLogout} className="nav-button">Logout</button>
+          ) : (
+            <Link to="/login" className="nav-link">Login</Link>
+          )}
+        </nav>
+      </div>
+    </header>
   )
 }
-
 
 export default Navbar

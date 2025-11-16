@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Footer as FlowbiteFooter } from "flowbite-react";
 import type { FC, SVGProps } from "react";
 import type { IconType } from "react-icons";
-import LogoImage from "../assets/logo.svg";
+import LogoImage from "../assets/react.svg";
 import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 
 
@@ -51,7 +51,7 @@ const Footer = () => {
           {/* Versión Desktop */}
           <div className="hidden lg:flex lg:items-start lg:justify-between lg:gap-8">
             {/* Logo - Centrado y más grande */}
-            <div className="flex-shrink-0 flex items-center justify-center px-6 py-4">
+            <div className="shrink-0 flex items-center justify-center px-6 py-4">
               <img src={LogoImage} alt="Waveon Logo" className="h-20 w-auto" />
             </div>
 
@@ -119,7 +119,7 @@ const Footer = () => {
             <div className="absolute top-4 right-0">
               <button
                 onClick={toggleMobileMenu}
-                className="p-2 !bg-gray-500 !text-white rounded-lg focus:outline-none transition-opacity hover:opacity-90"
+                className="p-2 bg-gray-500! text-white! rounded-lg focus:outline-none transition-opacity hover:opacity-90"
                 style={{ backgroundColor: '#6b7280', color: '#ffffff' }}
                 aria-label="Toggle menu"
               >
@@ -148,7 +148,7 @@ const Footer = () => {
                 <div>
                   <button
                     onClick={() => toggleSection("about")}
-                    className="w-full flex items-center justify-between py-2 px-4 !bg-gray-500 !text-white font-semibold rounded-lg transition-opacity hover:opacity-90"
+                    className="w-full flex items-center justify-between py-2 px-4 bg-gray-500! text-white! font-semibold rounded-lg transition-opacity hover:opacity-90"
                     style={{ backgroundColor: '#6b7280', color: '#ffffff' }}
                   >
                     <span>About Us</span>
@@ -185,7 +185,7 @@ const Footer = () => {
                 <div>
                   <button
                     onClick={() => toggleSection("legal")}
-                    className="w-full flex items-center justify-between py-2 px-4 !bg-gray-500 !text-white font-semibold rounded-lg transition-opacity hover:opacity-90"
+                    className="w-full flex items-center justify-between py-2 px-4 bg-gray-500! text-white! font-semibold rounded-lg transition-opacity hover:opacity-90"
                     style={{ backgroundColor: '#6b7280', color: '#ffffff' }}
                   >
                     <span>Legal</span>
@@ -222,7 +222,7 @@ const Footer = () => {
                 <div>
                   <button
                     onClick={() => toggleSection("follow")}
-                    className="w-full flex items-center justify-between py-2 px-4 !bg-gray-500 !text-white font-semibold rounded-lg transition-opacity hover:opacity-90"
+                    className="w-full flex items-center justify-between py-2 px-4 bg-gray-500! text-white! font-semibold rounded-lg transition-opacity hover:opacity-90"
                     style={{ backgroundColor: '#6b7280', color: '#ffffff' }}
                   >
                     <span>Follow Us</span>
