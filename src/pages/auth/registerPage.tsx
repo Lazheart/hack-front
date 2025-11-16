@@ -12,7 +12,8 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await register({ username, email, password, role: 'user', department: null })
+    // Send proper-cased role and omit department when not set to let API default to "None"
+    await register({ username, email, password, role: 'User' })
     navigate('/dashboard', { replace: true })
   }
 

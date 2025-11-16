@@ -19,12 +19,17 @@ export async function loginApi(payload: LoginRequest): Promise<LoginResponse> {
 }
 
 export async function registerApi(payload: RegisterRequest): Promise<RegisterResponse> {
-	// enforce defaults required by API
+	// enforce defaults required by API, normalizing role case-insensitively
+	const roleMap: Record<string, string> = { user: 'User', admin: 'Admin', worker: 'Worker' }
+	const normalizedRole = payload.role
+		? roleMap[payload.role.toLowerCase()] ?? payload.role
+		: 'User'
+
 	const body = {
 		email: payload.email,
 		username: payload.username,
 		password: payload.password,
-		role: payload.role ?? 'User',
+		role: normalizedRole,
 		department: payload.department ?? 'None',
 	}
 
