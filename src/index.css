@@ -179,6 +179,16 @@ body {
   .footer-left img { margin: 0 auto }
 }
 
+/* Mobile-first tweak: on small screens show ONLY collaborators */
+@media (max-width: 640px) {
+  /* hide React logo (left) and GitHub repo link (right) */
+  .footer-left,
+  .footer-right { display: none !important; }
+  /* keep collaborators centered and slightly compact */
+  .footer-center { margin: 0 auto; }
+  .footer-inner { padding: 0.75rem 0.5rem; }
+}
+
 /* Navbar styles */
 .site-navbar {
   width: 100%;
