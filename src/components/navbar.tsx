@@ -73,7 +73,7 @@ const Navbar = () => {
       <header ref={headerRef} style={headerStyle} className="anim-header anim-fade-in">
         <nav style={{display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.75rem 1.5rem', maxWidth: '1200px', margin: '0 auto'}}>
           <div style={{fontWeight: 700}}>
-            <Link to="/" className="anim-grow-on-hover" style={{color: 'var(--celeste)', textDecoration: 'none'}}>Waveon</Link>
+            <Link to="/" className="anim-grow-on-hover" style={{color: 'var(--celeste)', textDecoration: 'none'}}>Hackaton</Link>
           </div>
 
           <div style={{display: 'flex', gap: '1rem', alignItems: 'center', flex: 1}}>
