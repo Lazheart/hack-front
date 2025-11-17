@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import IncidentForm from '../components/IncidentForm'
 import useAuth from '../services/auth/useAuth'
 import { BsSun, BsMoon } from 'react-icons/bs'
 import { BiSearch } from 'react-icons/bi'
@@ -57,6 +58,7 @@ const Navbar = () => {
   const lastScrollY = useRef(0)
   const [visible, setVisible] = useState(true)
   const [headerHeight, setHeaderHeight] = useState(0)
+  const [openCreate, setOpenCreate] = useState(false)
 
   const handleLogout = () => {
     logout()
@@ -145,7 +147,7 @@ const Navbar = () => {
           {/* Right: create incident CTA + auth actions */}
           <div style={{display: 'flex', gap: '0.75rem', alignItems: 'center'}}>
             {!isAuthPage && (
-              <Link to="/post" className="btn-auth" style={{ textDecoration: 'none' }}>Reportar incidencia</Link>
+              <button onClick={() => setOpenCreate(true)} className="btn-auth" style={{ textDecoration: 'none' }}>Reportar incidencia</button>
             )}
 
             {user ? (
@@ -166,6 +168,17 @@ const Navbar = () => {
 
       {/* Spacer to avoid content being hidden under fixed header */}
       <div style={{height: headerHeight}} aria-hidden />
+      {openCreate && (
+        <div className="center-overlay-root" onClick={() => setOpenCreate(false)}>
+          <div className="center-overlay-card" onClick={(e) => e.stopPropagation()}>
+            <button className="center-overlay-close" onClick={() => setOpenCreate(false)} aria-label="Cerrar">×</button>
+            <h2 style={{margin:'0 0 .75rem'}}>Crear incidencia</h2>
+            <p style={{margin:'0 0 1rem', fontSize:'.85rem', color:'rgba(11,11,11,0.65)'}}>Completa los campos para reportar una nueva incidencia.</p>
+            {/* Lazy import to avoid circular refs */}
+            <IncidentForm onCreated={() => setOpenCreate(false)} />
+          </div>
+        </div>
+      )}
     </>
   )
 }

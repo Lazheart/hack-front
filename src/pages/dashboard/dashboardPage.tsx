@@ -1,8 +1,8 @@
 import BodyDashboard from './bodyDashboard'
 import { useMemo, useState } from 'react'
 import useAuth from '../../services/auth/useAuth'
-import { Link } from 'react-router-dom'
 import { BsClipboardData, BsPlusSquare, BsPeople } from 'react-icons/bs'
+import IncidentForm from '../../components/IncidentForm'
 import AdminSlideOver from './AdminSlideOver'
 import IncidentsSlideOver from './IncidentsSlideOver'
 
@@ -11,6 +11,7 @@ const DashboardPage = () => {
   const isAdmin = useMemo(() => (user?.role ?? '').toLowerCase() === 'admin', [user])
   const [openIncidents, setOpenIncidents] = useState(false)
   const [openAdmin, setOpenAdmin] = useState(false)
+  const [showCreateInline, setShowCreateInline] = useState(false)
 
   return (
     <div>
@@ -26,26 +27,26 @@ const DashboardPage = () => {
               Bienvenido{user?.username ? `, ${user.username}` : ''}. Rol: <b>{(user?.role ?? 'User')}</b>.
             </p>
             <div style={{display:'flex', gap:'.6rem', flexWrap:'wrap', marginTop:'.4rem'}}>
-              <Link to="/post" className="btn-auth" style={{textDecoration:'none'}}>Reportar incidencia</Link>
+              <button onClick={() => setShowCreateInline(v => !v)} className="btn-auth" style={{textDecoration:'none'}}>{showCreateInline ? 'Cerrar formulario' : 'Reportar incidencia'}</button>
               <button onClick={() => setOpenIncidents(true)} className="nav-ghost" style={{textDecoration:'none'}}>Ver incidencias</button>
             </div>
           </div>
-          <div className="anim-card" style={{background:'#fff', border:'1px solid rgba(16,24,32,0.06)', borderRadius:12, display:'grid', gridTemplateColumns:'repeat(3,1fr)'}}>
-            <div style={{padding:'1rem', borderRight:'1px solid rgba(16,24,32,0.06)'}}>
+          <div style={{display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'0.8rem'}}>
+            <div className="anim-card" style={{background:'#fff', border:'1px solid rgba(16,24,32,0.06)', borderRadius:12, padding:'1rem'}}>
               <div style={{display:'flex', alignItems:'center', gap:'.5rem'}}>
                 <BsClipboardData style={{color:'var(--blue)'}}/>
                 <b>Incidencias</b>
               </div>
               <div style={{color:'rgba(11,11,11,0.7)'}}>Historial y estado</div>
             </div>
-            <div style={{padding:'1rem', borderRight:'1px solid rgba(16,24,32,0.06)'}}>
+            <div className="anim-card" style={{background:'#fff', border:'1px solid rgba(16,24,32,0.06)', borderRadius:12, padding:'1rem'}}>
               <div style={{display:'flex', alignItems:'center', gap:'.5rem'}}>
                 <BsPlusSquare style={{color:'var(--blue)'}}/>
                 <b>Reportar</b>
               </div>
               <div style={{color:'rgba(11,11,11,0.7)'}}>Crea un nuevo caso</div>
             </div>
-            <div style={{padding:'1rem'}}>
+            <div className="anim-card" style={{background:'#fff', border:'1px solid rgba(16,24,32,0.06)', borderRadius:12, padding:'1rem'}}>
               <div style={{display:'flex', alignItems:'center', gap:'.5rem'}}>
                 <BsPeople style={{color:'var(--blue)'}}/>
                 <b>Equipo</b>
@@ -67,13 +68,13 @@ const DashboardPage = () => {
             <div style={{color:'rgba(11,11,11,0.7)', marginTop:'.25rem'}}>Explora reportes y su progreso.</div>
           </button>
 
-          <Link to="/post" className="anim-card" style={{textDecoration:'none', color:'inherit', background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem'}}>
+          <button onClick={() => setShowCreateInline(v => !v)} className="anim-card" style={{textDecoration:'none', color:'inherit', background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem', textAlign:'left'}}>
             <div style={{display:'flex', alignItems:'center', gap:'.6rem'}}>
               <BsPlusSquare style={{color:'var(--blue)'}}/>
               <b>Reportar nuevo</b>
             </div>
             <div style={{color:'rgba(11,11,11,0.7)', marginTop:'.25rem'}}>Crea una incidencia en segundos.</div>
-          </Link>
+          </button>
 
           {isAdmin ? (
             <button onClick={() => setOpenAdmin(true)} className="anim-card" style={{textDecoration:'none', color:'inherit', background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem', textAlign:'left'}}>
@@ -102,6 +103,9 @@ const DashboardPage = () => {
       {/* Incidents panel */}
       <section style={{padding:'1rem'}}>
         <div style={{maxWidth:1100, margin:'0 auto'}}>
+          {showCreateInline && (
+            <IncidentForm inline onCreated={() => setShowCreateInline(false)} onCancel={() => setShowCreateInline(false)} />
+          )}
           <BodyDashboard />
         </div>
       </section>

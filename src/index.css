@@ -504,3 +504,31 @@ button:focus-visible {
 
 @keyframes hf-slide-in { from { transform: translateX(16px); opacity: 0 } to { transform: translateX(0); opacity: 1 } }
 
+/* Centered modal overlay for creating incidents from navbar */
+.center-overlay-root{ position: fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; background:rgba(2,6,23,0.50); backdrop-filter: blur(3px); padding:1.2rem; }
+.center-overlay-card{ width: 100%; max-width: 640px; background: var(--bg-black); color: var(--text-white); border:1px solid rgba(16,24,32,0.10); border-radius:18px; padding:1.2rem 1.2rem 1.4rem; box-shadow:0 24px 64px rgba(2,6,23,0.45); animation:hf-fade-in-up 320ms var(--anim-ease) both; position:relative }
+.center-overlay-close{ position:absolute; top:0.6rem; right:0.6rem; background:transparent; border:1px solid rgba(16,24,32,0.12); padding:.35rem .65rem; border-radius:10px; cursor:pointer; color:inherit }
+.center-overlay-close:hover{ background:rgba(14,165,233,0.08); border-color:rgba(14,165,233,0.25) }
+
+/* IncidentForm styles */
+.incident-form-card, .incident-form-inline { font-size: .95rem }
+.if-label{ display:block; font-weight:600; margin-bottom: .35rem; font-size:.78rem; letter-spacing:.5px; text-transform:uppercase; color:rgba(11,11,11,0.65) }
+.dark .if-label{ color:rgba(255,255,255,0.65) }
+.if-input{ width:100%; padding:.75rem .85rem; border-radius:12px; border:1px solid rgba(16,24,32,0.12); background:#fff; font-size:.95rem; font-family:inherit; transition:border-color 160ms ease, box-shadow 160ms ease }
+.dark .if-input{ background:#0b0b0b; color:#fff; border-color:rgba(255,255,255,0.12) }
+.if-input:focus{ outline:none; border-color:rgba(14,165,233,0.55); box-shadow:0 0 0 4px rgba(14,165,233,0.18) }
+.if-input:disabled{ opacity:.6; cursor:not-allowed }
+.if-meta{ font-size:.7rem; letter-spacing:.5px; color:rgba(11,11,11,0.55) }
+.dark .if-meta{ color:rgba(255,255,255,0.55) }
+.if-error{ background:rgba(220,38,38,0.12); color:#dc2626; padding:.55rem .75rem; border-radius:10px; font-size:.75rem; }
+.if-success{ background:rgba(14,165,233,0.14); color:var(--blue); padding:.55rem .75rem; border-radius:10px; font-size:.75rem; }
+.if-btn{ border:none; font-weight:700; padding:.7rem 1rem; border-radius:999px; cursor:pointer; font-size:.85rem; display:inline-flex; align-items:center; gap:.4rem; transition:transform 160ms ease, box-shadow 160ms ease }
+.if-btn:focus{ outline:none }
+.if-btn-primary{ background:linear-gradient(90deg,var(--blue),var(--celeste)); color:#fff }
+.if-btn-primary:hover{ transform:scale(1.05); box-shadow:0 14px 36px rgba(14,165,233,0.18) }
+.if-btn-primary:disabled{ opacity:.6; filter:saturate(.6); cursor:not-allowed }
+.if-btn-secondary{ background:rgba(14,165,233,0.08); color:var(--blue); border:1px solid rgba(14,165,233,0.25) }
+.if-btn-secondary:hover{ transform:scale(1.05); box-shadow:0 10px 28px rgba(14,165,233,0.16) }
+.incident-form-inline{ background:#fff; border:1px solid rgba(16,24,32,0.06); padding:1rem 1.05rem 1.25rem; border-radius:16px; box-shadow:0 12px 32px rgba(2,6,23,0.18); margin-top:1rem }
+.dark .incident-form-inline{ background:#121212; border-color:rgba(255,255,255,0.08) }
+
