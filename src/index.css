@@ -55,37 +55,98 @@ body {
   justify-content: flex-start; /* left-align the card on desktop */
   min-height: 100vh;
   padding: 1.5rem 1rem;
+  position: relative; /* ensure overlay scoped to auth area, avoid blurring footer */
+  z-index: 0;
+}
+
+/* Soft gradient + blur overlay for background images on auth pages */
+.auth-overlay{
+  /* make overlay scoped to the auth container so footer and global layout are not affected by backdrop-filter */
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1200px 600px at 10% 20%, rgba(125,211,252,0.25), transparent 60%),
+              radial-gradient(800px 500px at 80% 80%, rgba(14,165,233,0.18), transparent 60%),
+              linear-gradient(to bottom, rgba(2,6,23,0.18), rgba(2,6,23,0.15));
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .auth-card-wrapper{ max-width: 1400px; width:100%; margin-left: 32px }
 .auth-card {
-  /* now roughly half the previous size (compact) */
-  width: 360px;
-  max-width: 90%;
-  min-height: 420px; /* ensure form fits */
-  background: #ffffff;
-  color: #0b0b0b; /* dark text inside card */
-  padding: 1rem 1rem;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.35);
+  /* compact glass card */
+  width: 380px;
+  max-width: 92%;
+  min-height: 440px;
+  background: rgba(255,255,255,0.86);
+  color: #0b0b0b;
+  padding: 1.15rem 1.15rem;
+  border-radius: 14px;
+  box-shadow: 0 18px 48px rgba(2,6,23,0.40);
+  border: 1px solid rgba(2,6,23,0.06);
+  backdrop-filter: saturate(120%) blur(4px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* push submit/button towards bottom */
+  position: relative;
+  z-index: 2; /* above the auth-overlay */
 }
 .auth-title {
   font-size: 2.2rem;
   margin: 0 0 0.6rem 0;
   color: inherit;
 }
-.auth-input {
+.auth-subtitle{ margin: 0; font-size: .95rem; color: rgba(11,11,11,0.6) }
+
+.auth-header{ display: flex; align-items: center; gap: .8rem; margin-bottom: .75rem }
+.auth-icon{
+  height: 34px; width: 34px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 10px; color: #0ea5e9; background: rgba(14,165,233,0.12);
+}
+.auth-form{ display: flex; flex-direction: column; gap: .9rem; margin-top: .25rem }
+.auth-field{ position: relative; display: grid; grid-template-columns: 1fr; }
+.auth-input{
   width: 100%;
-  padding: 0.95rem 1.1rem;
-  border-radius: 0.6rem;
-  border: 1px solid rgba(16,24,32,0.08);
+  padding: 1rem 2.6rem 1rem 2.4rem; /* space for icons */
+  border-radius: 0.8rem;
+  border: 1px solid rgba(16,24,32,0.12);
   background: #fff;
   color: #0b0b0b;
   font-size: 1rem;
+  transition: box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
 }
+.auth-input::placeholder{ color: transparent; }
+.auth-input:focus{ outline: none; border-color: rgba(14,165,233,0.45); box-shadow: 0 0 0 4px rgba(14,165,233,0.12); }
+
+.auth-label{
+  position: absolute; left: 2.4rem; top: 50%; transform: translateY(-50%);
+  color: rgba(16,24,32,0.55); pointer-events: none; transition: transform 160ms ease, color 160ms ease, top 160ms ease, font-size 160ms ease;
+  font-weight: 500;
+}
+.auth-input:focus + .auth-label,
+.auth-input:not(:placeholder-shown) + .auth-label{
+  /* float the label but keep it natural (no boxed background) to avoid the 'bordered' look when lifted */
+  top: -8px; transform: translateY(0) scale(0.92); color: rgba(14,165,233,0.95);
+  background: transparent; padding: 0; border-radius: 0; font-size: 0.88rem;
+}
+
+/* Handle browser autofill: some browsers don't trigger :placeholder-shown - add webkit autofill selectors */
+.auth-input:-webkit-autofill + .auth-label,
+.auth-input:-internal-autofill-selected + .auth-label,
+.auth-input:-webkit-autofill:focus + .auth-label{
+  top: -8px; transform: translateY(0) scale(0.92); color: rgba(14,165,233,0.95);
+  background: transparent; padding: 0; border-radius: 0; font-size: 0.88rem;
+}
+
+/* Ensure autofill background and text color remain readable */
+.auth-input:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset; /* override yellow autofill */
+  box-shadow: 0 0 0px 1000px #ffffff inset;
+  -webkit-text-fill-color: #0b0b0b;
+}
+
+.field-icon{ position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); color: rgba(16,24,32,0.55) }
+.field-append{ position: absolute; right: .6rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: rgba(16,24,32,0.65); cursor: pointer }
+.field-append:hover{ color: rgba(14,165,233,0.9) }
 .auth-input::placeholder{ color: rgba(16,24,32,0.4); }
 .auth-button {
   width: 60%;
@@ -98,6 +159,9 @@ body {
   font-weight: 700;
   align-self: center;
 }
+.auth-button[disabled]{ opacity: .8; filter: saturate(.6); cursor: not-allowed }
+.spinner{ width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.6); border-top-color: #ffffff; border-radius: 999px; display: inline-block; animation: hf-spin 650ms linear infinite }
+@keyframes hf-spin{ to{ transform: rotate(360deg) } }
 .auth-small { color: rgba(11,11,11,0.6); text-align:center }
 
 /* background variants for login/register */
@@ -109,17 +173,17 @@ body {
 
 
 @media (max-width: 1366px){
-  .auth-card{ width: 320px; min-height: 380px; padding: 0.95rem 1rem }
+  .auth-card{ width: 340px; min-height: 400px; padding: 1rem 1.05rem }
 }
 
 @media (max-width: 1024px){
-  .auth-card{ width: 280px; min-height: 360px; padding: 0.85rem 0.9rem }
+  .auth-card{ width: 300px; min-height: 380px; padding: 0.95rem }
 }
 
 @media (max-width: 768px){
   /* On small screens keep card centered and full-width for usability */
   .auth-container{ padding: 1rem; justify-content: center }
-  .auth-card{ width: 100%; height: auto; padding: 0.9rem }
+  .auth-card{ width: 100%; height: auto; padding: 1rem }
   .auth-card-wrapper{ margin-left: 0; }
   .auth-button{ width: 100% }
 }
@@ -157,13 +221,7 @@ body {
 }
 
 /* White card that overlays the background image for auth pages */
-.auth-card {
-  background: #ffffff;
-  color: #0b0b0b;
-  padding: 1.25rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 8px 24px rgba(2,6,23,0.6);
-}
+/* (kept above; this duplicate block was consolidated) */
 
 /* Footer layout */
 .footer-inner {
@@ -424,4 +482,12 @@ button:focus-visible {
 }
 .btn-auth:hover { transform: scale(1.06); box-shadow: 0 14px 34px rgba(14,165,233,0.16); color: #ffffff; }
 .btn-auth:focus { outline: none; box-shadow: 0 0 0 4px rgba(14,165,233,0.08); }
+
+/* Stagger children animations for auth forms */
+.auth-stagger > * { animation: hf-fade-in-up 320ms var(--anim-ease) both }
+.auth-stagger > *:nth-child(1){ animation-delay: 40ms }
+.auth-stagger > *:nth-child(2){ animation-delay: 80ms }
+.auth-stagger > *:nth-child(3){ animation-delay: 120ms }
+.auth-stagger > *:nth-child(4){ animation-delay: 160ms }
+.auth-stagger > *:nth-child(5){ animation-delay: 200ms }
 

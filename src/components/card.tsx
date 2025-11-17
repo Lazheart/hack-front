@@ -100,18 +100,18 @@ const NewCard = () => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography sx={{ marginBottom: 2 }}>Method:</Typography>
+          <Typography sx={{ marginBottom: 2 }}>Descripción:</Typography>
           <Typography sx={{ marginBottom: 2 }}>
-            Hitler is the best
+            Este es un texto de ejemplo para mostrar contenido adicional dentro de la tarjeta.
           </Typography>
           <Typography sx={{ marginBottom: 2 }}>
-            Hitler is the best
+            Puedes reemplazarlo con información relevante para tu aplicación.
           </Typography>
           <Typography sx={{ marginBottom: 2 }}>
-            Hail Hydra
+            Soporta múltiples líneas y estilos.
           </Typography>
           <Typography>
-            Hydra is the best
+            Gracias por visitar esta sección.
            </Typography>
         </CardContent>
       </Collapse>
