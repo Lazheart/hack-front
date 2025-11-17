@@ -1,13 +1,16 @@
 import BodyDashboard from './bodyDashboard'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import useAuth from '../../services/auth/useAuth'
-import AdminRegisterWorker from './adminRegisterWorker'
 import { Link } from 'react-router-dom'
 import { BsClipboardData, BsPlusSquare, BsPeople } from 'react-icons/bs'
+import AdminSlideOver from './AdminSlideOver'
+import IncidentsSlideOver from './IncidentsSlideOver'
 
 const DashboardPage = () => {
   const { user } = useAuth()
   const isAdmin = useMemo(() => (user?.role ?? '').toLowerCase() === 'admin', [user])
+  const [openIncidents, setOpenIncidents] = useState(false)
+  const [openAdmin, setOpenAdmin] = useState(false)
 
   return (
     <div>
@@ -24,10 +27,7 @@ const DashboardPage = () => {
             </p>
             <div style={{display:'flex', gap:'.6rem', flexWrap:'wrap', marginTop:'.4rem'}}>
               <Link to="/post" className="btn-auth" style={{textDecoration:'none'}}>Reportar incidencia</Link>
-              <Link to="/dashboard?q=1" className="nav-ghost" style={{textDecoration:'none'}}>Ver incidencias</Link>
-              {isAdmin && (
-                <a href="#admin-register" className="anim-navlink" style={{textDecoration:'none'}}>Registrar trabajador</a>
-              )}
+              <button onClick={() => setOpenIncidents(true)} className="nav-ghost" style={{textDecoration:'none'}}>Ver incidencias</button>
             </div>
           </div>
           <div className="anim-card" style={{background:'#fff', border:'1px solid rgba(16,24,32,0.06)', borderRadius:12, display:'grid', gridTemplateColumns:'repeat(3,1fr)'}}>
@@ -59,13 +59,13 @@ const DashboardPage = () => {
       {/* Quick actions */}
       <section style={{padding:'1.2rem 1rem'}}>
         <div style={{maxWidth:1100, margin:'0 auto', display:'grid', gap:'1rem', gridTemplateColumns:'repeat(3, 1fr)'}}>
-          <Link to="/dashboard?q=1" className="anim-card" style={{textDecoration:'none', color:'inherit', background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem'}}>
+          <button onClick={() => setOpenIncidents(true)} className="anim-card" style={{textDecoration:'none', color:'inherit', background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem', textAlign:'left'}}>
             <div style={{display:'flex', alignItems:'center', gap:'.6rem'}}>
               <BsClipboardData style={{color:'var(--blue)'}}/>
               <b>Ver incidencias</b>
             </div>
             <div style={{color:'rgba(11,11,11,0.7)', marginTop:'.25rem'}}>Explora reportes y su progreso.</div>
-          </Link>
+          </button>
 
           <Link to="/post" className="anim-card" style={{textDecoration:'none', color:'inherit', background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem'}}>
             <div style={{display:'flex', alignItems:'center', gap:'.6rem'}}>
@@ -76,13 +76,13 @@ const DashboardPage = () => {
           </Link>
 
           {isAdmin ? (
-            <a href="#admin-register" className="anim-card" style={{textDecoration:'none', color:'inherit', background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem'}}>
+            <button onClick={() => setOpenAdmin(true)} className="anim-card" style={{textDecoration:'none', color:'inherit', background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem', textAlign:'left'}}>
               <div style={{display:'flex', alignItems:'center', gap:'.6rem'}}>
                 <BsPeople style={{color:'var(--blue)'}}/>
                 <b>Registrar trabajador</b>
               </div>
               <div style={{color:'rgba(11,11,11,0.7)', marginTop:'.25rem'}}>Alta de personal y asignación.</div>
-            </a>
+            </button>
           ) : (
             <div className="anim-card" style={{background:'#fff', border:'1px solid rgba(16,24,32,0.06)', padding:'1rem', opacity:0.7}}>
               <div style={{display:'flex', alignItems:'center', gap:'.6rem'}}>
@@ -95,14 +95,9 @@ const DashboardPage = () => {
         </div>
       </section>
 
-      {/* Admin module */}
-      {isAdmin && (
-        <section id="admin-register" className="anim-fade-in" style={{padding:'0 1rem 0.4rem'}}>
-          <div style={{maxWidth:1100, margin:'0 auto'}}>
-            <AdminRegisterWorker />
-          </div>
-        </section>
-      )}
+      {/* SlideOver modals */}
+      <IncidentsSlideOver open={openIncidents} onClose={() => setOpenIncidents(false)} />
+      {isAdmin && <AdminSlideOver open={openAdmin} onClose={() => setOpenAdmin(false)} />}
 
       {/* Incidents panel */}
       <section style={{padding:'1rem'}}>

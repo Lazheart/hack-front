@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
-import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
+import { FiUser, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import useAuth from '../../services/auth/useAuth'
 import LoginBg from '../../assets/UTEC-Lima_012.webp'
 
@@ -45,7 +45,8 @@ const LoginPage = () => {
 
           <form onSubmit={handleSubmit} className="auth-form auth-stagger">
             <div className="auth-field">
-              <FiMail className="field-icon" aria-hidden />
+              {/* Persona en lugar de sobre/candado para el primer campo */}
+              <FiUser className="field-icon" aria-hidden />
               <input
                 id="email"
                 type="email"

@@ -491,3 +491,16 @@ button:focus-visible {
 .auth-stagger > *:nth-child(4){ animation-delay: 160ms }
 .auth-stagger > *:nth-child(5){ animation-delay: 200ms }
 
+/* SlideOver (panel lateral) */
+.slideover-root{ position: fixed; inset: 0; z-index: 1000; background: rgba(2,6,23,0.38); backdrop-filter: blur(1px); display: flex; justify-content: flex-end; }
+.slideover-panel{ height: 100%; max-width: 96vw; background: var(--bg-black); color: var(--text-white); border-left: 1px solid rgba(16,24,32,0.08); box-shadow: -20px 0 40px rgba(2,6,23,0.25); transform: translateX(0); animation: hf-slide-in 220ms var(--anim-ease) both; display: flex; flex-direction: column; }
+.slideover-header{ display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1rem; border-bottom: 1px solid rgba(16,24,32,0.08); position: sticky; top: 0; background: inherit; z-index: 1; }
+.slideover-title{ font-weight: 800; font-size: 1.1rem; }
+.slideover-desc{ color: rgba(11,11,11,0.7); font-size: .9rem }
+.dark .slideover-desc{ color: rgba(255,255,255,0.7) }
+.slideover-close{ background: transparent; border: 1px solid rgba(16,24,32,0.10); color: inherit; padding: .2rem .5rem; border-radius: 8px; cursor: pointer }
+.slideover-close:hover{ background: rgba(14,165,233,0.08); border-color: rgba(14,165,233,0.25) }
+.slideover-body{ padding: 1rem; overflow: auto; height: 100%; }
+
+@keyframes hf-slide-in { from { transform: translateX(16px); opacity: 0 } to { transform: translateX(0); opacity: 1 } }
+

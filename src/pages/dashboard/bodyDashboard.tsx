@@ -54,11 +54,7 @@ const BodyDashboard = () => {
     if (visible) void load()
   }, [location.search, visible, load])
 
-  const onToggle = async () => {
-    const next = !visible
-    setVisible(next)
-    if (next && incidents.length === 0) await load()
-  }
+  // Removed inline toggle button. Visibility now changes only via URL params (q, page) or external triggers.
 
   const goToPage = (p: number) => {
     const sp = new URLSearchParams(location.search)
@@ -69,15 +65,7 @@ const BodyDashboard = () => {
 
   return (
     <div>
-      <div className="flex items-center gap-3">
-        <button
-          onClick={onToggle}
-          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-        >
-          {visible ? 'Ocultar incidencias' : 'Ver incidencias reportadas'}
-        </button>
-        <div className="text-sm text-gray-600">{user ? `Sesión: ${user.email} (${user.role ?? 'User'})` : 'No autenticado'}</div>
-      </div>
+      <div className="text-sm text-gray-600">{user ? `Sesión: ${user.email} (${user.role ?? 'User'})` : 'No autenticado'}</div>
 
       <div className="mt-4">
         {visible && (

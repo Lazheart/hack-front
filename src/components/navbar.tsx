@@ -118,6 +118,7 @@ const Navbar = () => {
 
   const path = location.pathname
   const isAuthPage = path === '/login' || path === '/register'
+  // const isAdmin = (user?.role ?? '').toLowerCase() === 'admin'
 
   return (
     <>
@@ -141,8 +142,12 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Right: auth actions */}
+          {/* Right: create incident CTA + auth actions */}
           <div style={{display: 'flex', gap: '0.75rem', alignItems: 'center'}}>
+            {!isAuthPage && (
+              <Link to="/post" className="btn-auth" style={{ textDecoration: 'none' }}>Reportar incidencia</Link>
+            )}
+
             {user ? (
               <button onClick={handleLogout} className="anim-cta" style={{background: 'transparent', color: 'var(--text-white)', border: '1px solid rgba(0,0,0,0.06)', padding: '0.5rem 0.8rem', borderRadius: 6}}>Logout</button>
             ) : (
