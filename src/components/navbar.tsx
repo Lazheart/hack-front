@@ -44,7 +44,7 @@ const SearchForm = () => {
       <button type="submit" aria-label="Buscar" title="Buscar" className="search-icon" style={{background: 'transparent', border: 'none'}}>
         <BiSearch size={18} />
       </button>
-      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar..." aria-label="Buscar incidencias" className="search-input" />
+      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar Incidencias..." aria-label="Buscar incidencias" className="search-input" />
     </form>
   )
 }

@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { loginApi, registerApi } from './authApi'
 import type { UserInfo, RegisterRequest } from './interfaceAuth'
+import { decodeJwt } from './jwt'
 
 type User = UserInfo
 
@@ -46,8 +47,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // ignore storage errors (e.g. quota, SSR)
       console.warn('could not persist token', e)
     }
-    // minimal user info (token may contain more claims; decoding is optional)
-    const u: User = { email, name: email.split('@')[0], role: 'User', department: null }
+    // Try to decode JWT to extract user claims like role, username, department
+    const claims = decodeJwt<Record<string, unknown>>(res.token) || {}
+    const c = claims as Record<string, unknown>
+    const asStr = (v: unknown): string | undefined => (typeof v === 'string' ? v : undefined)
+    const asStrArrHead = (v: unknown): string | undefined => (Array.isArray(v) && typeof v[0] === 'string' ? v[0] : undefined)
+    const claimEmail = asStr(c.email) || asStr(c.sub) || email
+    const claimUsername = asStr(c.username) || asStr(c.preferred_username) || asStr(c.name) || (typeof claimEmail === 'string' ? claimEmail.split('@')[0] : 'user')
+
+    // Resolve role from common claim patterns
+    const realmAccess = (c['realm_access'] && typeof c['realm_access'] === 'object') ? (c['realm_access'] as Record<string, unknown>) : undefined
+    const roleFromClaims =
+      asStr(c.role) ||
+      asStrArrHead(c.roles) ||
+      asStrArrHead(c.authorities) ||
+      (realmAccess ? asStrArrHead(realmAccess.roles) : undefined) ||
+      asStrArrHead(c['cognito:groups']) ||
+      'User'
+
+    const departmentFromClaims: string | null =
+      asStr(c.department) || asStr(c.dept) || asStr(c['x-department']) || null
+
+    const u: User = {
+      username: claimUsername,
+      email: claimEmail,
+      name: (claims.name as string) || claimUsername,
+      role: roleFromClaims,
+      department: departmentFromClaims,
+    }
+
     setUser(u)
   }
 

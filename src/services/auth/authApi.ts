@@ -33,9 +33,18 @@ export async function registerApi(payload: RegisterRequest): Promise<RegisterRes
 		department: payload.department ?? 'None',
 	}
 
+	// Optional Authorization header (useful when registering trabajadores desde Admin)
+	const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+	try {
+		const token = localStorage.getItem('hf_token')
+		if (token) headers.Authorization = `Bearer ${token}`
+	} catch {
+		// ignore storage errors (SSR or private mode)
+	}
+
 	const res = await fetch(`${AUTH_BASE}/register`, {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		headers,
 		body: JSON.stringify(body),
 	})
 
